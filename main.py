@@ -37,4 +37,16 @@ class Curso(Base):
     def __repr__(self):
         return f"ID: {self.id} - NOME: {self.nome}"
     
-    
+#Tabela Intermediaria
+inscricoes = Table(
+    "inscricoes", #nome da tabela
+    Base.metadata,
+    Column("aluno_id", Integer, ForeignKey("alunos.id"), primary_key=True),
+    Column("curso_id", Integer, ForeignKey("cursos.id"), primary_key=True),
+)
+#Conexão com db(tabela)
+engine = create_engine("sqlite:///gestao_escolar.db")
+
+Base.metadata.create_all(engine)
+
+Session = sessionmaker(bind=engine)
