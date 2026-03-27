@@ -150,8 +150,49 @@ def listar_alunos():
             session.rollback()
             print(f"Ocorreu um erro {erro}")
 
-listar_alunos()
+# listar_alunos()
 
 #Atualizar
+def atualizar_aluno():
+    with Session() as session:
+        try:
+            nome_aluno = input("Digite o nome do aluno que deseja atualizar: ").capitalize()
+            aluno = session.query(Aluno).filter_by(nome=nome_aluno).first()
+
+            if aluno == None:
+                print("Aluno não encontrado!")
+                return
+            
+            novo_nome = input("Digite o novo nome do aluno: ").capitalize()
+            aluno.nome = novo_nome
+
+            session.commit()
+            print("Aluno atualizado com sucesso!")
+
+        except Exception as erro:
+            session.rollback()
+            print(f"Ocorreu um erro {erro}")
+# atualizar_aluno()
+
+def atualizar_curso():
+    with Session() as session:
+        try:
+            nome_curso = input("Digite o nome do curso que deseja atualizar: ").capitalize()
+            curso = session.query(Curso).filter_by(nome=nome_curso).first()
+
+            if curso is None:
+                print("Curso não encontrado!")
+                return
+            
+            novo_nome = input("Digite o novo nome do curso: ").capitalize()
+            curso.nome = novo_nome
+
+            session.commit()
+            print("Curso atualizado com sucesso!")
+
+        except Exception as erro:
+            session.rollback()
+            print(f"Ocorreu um erro {erro}")
+atualizar_curso()
 
 #Deletar
