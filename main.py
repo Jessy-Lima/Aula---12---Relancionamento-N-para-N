@@ -99,6 +99,30 @@ def cadastrar_aluno():
             print(f"Ocorreu um erro {erro}")
 # cadastrar_aluno()
 
+def inserir_aluno():
+    with Session() as session:
+        try:
+            nome_curso = input("Digite o nome do curso para inserir o aluno: ").capitalize()
+            curso = session.query(Curso).filter_by(nome=nome_curso).first()
+            if curso == None:
+                print(f"Nenhum curso encontrado com esse nome {nome_curso}")
+                return
+            else:
+                nome_aluno = input("Digite o nome do aluno para cadastrar no curso: ")
+                aluno = session.query(Aluno).filter_by(nome=nome_aluno).first()
+                if aluno == None:
+                    print(f"Nenhum aluno cadastrado com esse nome{nome_aluno}")
+                    return
+                else:
+                    aluno.cursos.append(curso)
+                    session.commit()
+                    print(f"Aluno registrado com sucesso no curso: {nome_curso}")
+        except Exception as erro:
+            session.rollback()
+            print(f"Ocorreu um erro {erro}")
+
+# inserir_aluno()
+
 #Listar
 
 #Atualizar
